@@ -1,0 +1,57 @@
+Anmol Gupta | 005723941 | git.txt
+----------------------------------
+
+> Upon cloning Git's git repository from GitHub and running git branch -a, I got:
+
+bash-5.2$ git branch -v -a
+* master                3b08839926 The tenth batch
+  remotes/origin/HEAD   -> origin/master
+  remotes/origin/main   3b08839926 The tenth batch
+  remotes/origin/maint  e7e5c6f715 Downmerge a bit more for 2.38.2
+  remotes/origin/master 3b08839926 The tenth batch
+  remotes/origin/next   58b659f92b Merge branch 'po/glossary-around-traversal' into next
+  remotes/origin/seen   d90312a7d3 Merge branch 'kz/merge-tree-merge-base' into seen
+  remotes/origin/todo   5a2ca43ef7 What's cooking (2022/11 #1)
+
+> Running the same command for the git repo under ~eggert/src/github/git, I got:
+
+bash-5.2$ git branch -v -a
+  maint                 d5b41391a4 Git 2.38.1
+* master                1fc3c0ad40 The fifth batch
+  next                  1ac3b46fbe Merge branch 'jz/patch-id' into next
+  seen                  e5f26de0e6 Merge branch 'cc/filtered-repack' into seen
+  todo                  bb4ffbe30e What's cooking (2022/10 #06)
+  remotes/origin/HEAD   -> origin/master
+  remotes/origin/main   1fc3c0ad40 The fifth batch
+  remotes/origin/maint  d5b41391a4 Git 2.38.1
+  remotes/origin/master 1fc3c0ad40 The fifth batch
+  remotes/origin/next   1ac3b46fbe Merge branch 'jz/patch-id' into next
+  remotes/origin/seen   e5f26de0e6 Merge branch 'cc/filtered-repack' into seen
+  remotes/origin/todo   bb4ffbe30e What's cooking (2022/10 #06)
+
+> In the command: git branch -v -a, the -a shows us all the branches (local and remote) and the -v gives us a short description about them.
+> This shows that there is a difference between the repos. There are different in Professor Eggert's git repo and the branches show different descriptions hence the git repo under ~eggert/src/github/git is not up to date with Git's git repo.
+
+I investigated the branches further and noticed that the latest commit for ~eggert/src/github/git is:
+
+commit 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886 (HEAD -> master, origin/master, origin/main, origin/HEAD)
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Oct 21 11:37:36 2022 -0700
+
+    The fifth batch
+    
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+The latest commit for Git's git repo is:
+
+commit 3b08839926fcc7cc48cf4c759737c1a71af430c1 (HEAD -> master, origin/master, origin/main, origin/HEAD)
+Author: Taylor Blau <me@ttaylorr.com>
+Date:   Thu Nov 3 20:41:55 2022 -0400
+
+    The tenth batch
+    
+    Signed-off-by: Taylor Blau <me@ttaylorr.com>
+
+This confirms that Professor Eggert's git repo was last committed to on October 21, 2022 whereas Git's git repo was last updated a few hours ago.
+
+

@@ -1,0 +1,16 @@
+# #!/usr/local/cs/bin/bash
+# # a=$(./randall 15 | wc -c)   #takes output of ./randall 15 and gives count number
+
+# # if [ $a -eq 15 ];   #compares count to expected number
+# # 	then echo "simple number check success"; 
+# # 	else echo "simple number check fail" 
+# # fi
+
+a=$(./randall -i /dev/random -o 5 | wc -c)  
+
+if [ $a -eq 5 ];
+	then echo "success"; 
+	else echo "fail" 
+fi
+
+

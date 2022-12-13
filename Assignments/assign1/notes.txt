@@ -1,0 +1,202 @@
+Anmol Gupta (005723941) | CS35L | Fall22
+---------------------------------------------------
+
+#######   Lab 1.1  ########
+
+9. Did you move the cursor using the arrow keys? If so, repeat the above steps, without using the arrow keys.
+
+> No, done using emacs commands.
+
+---------------------------------------------------
+
+#######   Lab 1.4  ########
+
+8. Now let's try some search and replaces. Search the text document for the pattern "<ol>". How many instances did you find? Use the search and replace function to replace them all with the final-caps equivalent "<oL>".
+
+> Using emacs commands to find the number of searches matching <ol>, I got the result: 6 matches for <ol>
+
+---------------------------------------------------
+
+#######   Lab 1.5  ########
+
+1. Where are the sh, sleep, and type commands located?
+
+> Using the ‘which <COMMAND>’ command in terminal, we can find where the required commands are located:
+	- sh: /usr/bin/sh
+	- sleep: /usr/bin/sleep
+	- type: /usr/bin/type
+
+----------------------------------------------------
+
+2. What executable programs in /usr/bin have names that are exactly three characters long and start with the two letters se, and what do they do?
+
+> To locate the required files, we can run the command cd /usr/bin/ && ls | grep "^se.$". We get:
+- sed : it is an editor for filtering and performing basic text transformations on an input stream.
+- seq : it is used to print a sequence of numbers from specified arguments of FIRST to LAST number in steps of the argument INCREMENT.
+
+-----------------------------------------------------
+
+3. When you execute the command named by the symbolic link /usr/local/cs/bin/emacs, which file actually is executed?
+
+> When we run /usr/local/cs/bin/emacs, the emacs editor opens up. To find the file that is actually executed, we can run ls -l /usr/local/cs/bin/emacs. This results in:
+lrwxrwxrwx 2 eggert csfac 28 Sep 12 11:10 /usr/local/cs/bin/emacs -> ../emacs-28.2/bin/emacs-28.2
+
+So, the file actually executed is: ../emacs-28.2/bin/emacs-28.2
+
+---------------------------------------------------------
+
+4. What is the version number of the /usr/bin/gcc program? of the plain gcc program? Why are they different programs?
+
+> Version number of the /usr/bin/gcc program is 8.5.0 20210514 (Red Hat 8.5.0-4) and the version number of the plain gcc program is 12.2.0. 
+In the beginning of the assignment, we changed the path variable using the command 'export PATH=/usr/local/cs/bin:$PATH'. Now, if we do "which gcc" and "which /usr/bin/gcc", they result in different paths. This is why they correspond to different programs.
+
+------------------------------------------------------
+
+5. The chmod program changes permissions on a file. What does the symbolic mode u+sx,o-w mean, in terms of permissions?
+
+> The symbolic mode:
+	- u (user) refers to the owner of the file
+	- s (segued/gid) refers to special mode permission
+	- x (execute) is permission for execute only
+	- o (others) users who are not the file owner or members of the file's group
+	- w (write) is permission for write only
+So:
+	u+sx changes the user's permissions to special mode permissions in execute mode allowing them to execute the file with root user permissions.
+	o-w removes the write permissions for users who are not the file owner or members of the file's group hence other users cannot write to the file.
+u+sx,o-w shows that multiple symbolic modes can be given when separated by commas.
+
+---------------------------------------------------------
+
+6. Use the find command to find all directories modified on or after the day of this class’s first lecture, that are located under (or are the same as) the directory /usr/local/cs.
+
+> The shell command we can use to find all the directories required is: find /usr/local/cs -type d -newermt "2022-09-26"
+
+where /usr/local/cs corresponds to the directory path, d (debugoptions) is for option control in the treatment of symbolic links, -newermt "2022-09-26" means file-date ≥ 2022-09-26.
+
+All the required directories found are:
+/usr/local/cs
+/usr/local/cs/bin
+/usr/local/cs/share/info
+/usr/local/cs/share/man/man1
+/usr/local/cs/src/bash
+/usr/local/cs/src/bash/RCS
+/usr/local/cs/bash-5.2
+/usr/local/cs/bash-5.2/bin
+/usr/local/cs/bash-5.2/share
+/usr/local/cs/bash-5.2/share/man
+/usr/local/cs/bash-5.2/share/man/man1
+/usr/local/cs/bash-5.2/share/info
+/usr/local/cs/bash-5.2/share/doc
+/usr/local/cs/bash-5.2/share/doc/bash
+/usr/local/cs/bash-5.2/lib
+/usr/local/cs/bash-5.2/lib/bash
+/usr/local/cs/bash-5.2/lib/pkgconfig
+/usr/local/cs/bash-5.2/include
+/usr/local/cs/bash-5.2/include/bash
+/usr/local/cs/bash-5.2/include/bash/builtins
+/usr/local/cs/bash-5.2/include/bash/include
+
+---------------------------------------------------------
+
+7. Of the files in the same directory as find, how many of them are symbolic links?
+
+> We first move into the find directory. We can then use the find command with -l as the option control in the treatment of symbolic links as it will follow the symbolic link. We can then count and print the number of symbolic links using the wc command which is used to print newline, word, and byte counts for each file.
+
+The command we can use is find /usr/bin/ -type l | wc -l
+This gives us:
+
+[anmol@lnxsrv13 ~]$ find /usr/bin/ -type l | wc -l
+259
+
+Hence, there are 259 symbolic links in the files in the same directory as find for lnxsrv13.
+
+---------------------------------------------------------
+
+8. What is the oldest file in the /usr/lib64 directory? Use the last-modified time to determine age. Specify the name of the file without the /usr/lib64/ prefix. Don't ignore files whose names start with ".", but do ignore files under subdirectories of /usr/lib64/. Consider files of all types, that is, your answer might be a regular file, or a directory, or something else.
+
+> We can use the command cd /usr/lib64 && ls -alt to first move into the /usr/lib64 directory successfully and then use the && command to run ls -alt which lists all the files in a list in order of last modified times. We get the oldest file as: 
+
+lrwxrwxrwx.   1 root root       15 Aug 12  2018 libbz2.so.1 -> libbz2.so.1.0.6
+
+So, libbz2.so.1 is the oldest file in the /usr/lib64 directory dating back to August 12, 2018.
+
+---------------------------------------------------------
+
+9. In Emacs, what commands have transpose in their name?
+
+> We can use the apropos command to show commands matching a string using the keys: C-h a then typing "transpose". We get this:
+
+transpose-chars               C-t
+   Interchange characters around point, moving forward one character.
+transpose-lines               C-x C-t
+   Exchange current line and previous line, leaving point after both.
+transpose-paragraphs          M-x ... RET
+   Interchange the current paragraph with the next one.
+transpose-regions             M-x ... RET
+   Transpose region STARTR1 to ENDR1 with STARTR2 to ENDR2.
+transpose-sentences           M-x ... RET
+   Interchange the current sentence with the next one.
+transpose-sexps               C-M-t
+   Like \[transpose-chars] (`transpose-chars'), but applies to sexps.
+transpose-words               M-t
+   Interchange words around point, leaving point at end of them.
+
+Hence, the above 7 commands have transpose in their name.
+
+---------------------------------------------------------
+
+10. What does the Emacs yank function do, and how can you easily invoke it using keystrokes?
+
+> In simple words, the emacs yank command pastes the text most recently copied in the place where the cursor currently is. We can easily invoke it using C-y keystroke.
+
+To view descriptions about yank, we can do C-h f yank to get:
+
+yank is an interactive byte-compiled Lisp function in ‘simple.el’.
+
+It is bound to C-y, S-<insertchar>, S-<insert>, <menu-bar> <edit>                                                      
+<paste>.
+
+(yank &optional ARG)
+
+Reinsert ("paste") the last stretch of killed text.
+More precisely, reinsert the most recent kill, which is the stretch of
+text most recently killed OR yanked, as returned by ‘current-kill’ (which
+see).  Put point at the end, and set mark at the beginning without
+activating it. With just C-u as argument, put point
+at beginning, and mark at end.
+With argument N, reinsert the Nth most recent kill.
+
+---------------------------------------------------------
+
+11. When looking at the directory /usr/bin, what's the difference between the output of the ls -l command, and the directory listing of the Emacs dired command?
+
+> To find the output of ls -l command in the /usr/bin directory, I ran ls -l in the directory. There were a total of 310328 entries.
+[anmol@lnxsrv13 /usr/bin]$ ls -l
+total 310328
+
+To find the output of dired command in emacs, I ran emacs in the /usr/bin directory and then used C-x d to view the output. There were a total of 310404 entries.
+/usr/bin:
+  total used in directory 310404 available 6.8 GiB
+
+As we can see from the number of files, dired has more entries and shows hidden files which the ls -l command does not show.
+
+---------------------------------------------------------
+
+12. Use the ps command to find your own login shell's process, all that process's ancestors, and all its descendants. Some ps options that you might find useful include -e, -f, -j, -l, -t, -H, and -T.
+
+> ps is a report snapshot of the current processes. 
+After reading the man pages for ps, we can use the following command: ps -ejH
+to display the shell's process, all that process's ancestors, and all its descendants.
+
+We can also use ps -p $$ to get current process and its descendants.
+
+[anmol@lnxsrv13 ~]$ ps -p $$
+    PID TTY          TIME CMD
+2688022 pts/28   00:00:00 bash
+
+and ps -p $$ -o ppid= | xargs ps -p for the process's ancestors.
+[anmol@lnxsrv13 ~]$ ps -p $$ -o ppid= | xargs ps -p
+    PID TTY          TIME CMD
+2688018 ?        00:00:00 sshd
+
+---------------------------------------------------------

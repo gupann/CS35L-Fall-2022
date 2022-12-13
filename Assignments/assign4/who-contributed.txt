@@ -1,0 +1,57 @@
+Anmol Gupta | 005723941 | who-contributed.txt
+-----------------------------------------------
+
+My first step in attempting to find out how this line was introduced to search for the line using:
+
+git log -S “Even newspaper reports present contradictory information.”
+
+I used this because the -S lets us find all instances of a string in our repo's history.
+
+Initially I had planned to use git blame but upon further research I learned that git blame only works on existing lines of code. Unfortunately, however I don't know where and whether this line still exists in the code base which is why I deemed using git log -S better. The output is:
+
+bash-5.2$ git log -S "Even newspaper reports present contradictory information."
+commit c12b432741eed9a422fbf99fa27af6e7a941d88b
+Author: Arthur David Olson <ado@elsie>
+Date:   Thu Dec 21 11:43:42 1995 -0500
+
+    Eggert changes
+    
+    SCCS-file: northamerica
+    SCCS-SID: 7.20
+
+While this command gives us all the instances of the string, I wanted to make sure that there was only one commit introducing this line. I ran the command:
+
+grep -Rn "Even newspaper reports present contradictory information."
+
+This searched recursively through all the files and informs us about the file and line number having this line. I got the following output telling us that it is present on line 895 of the northamerica file.
+
+bash-5.2$ grep -Rn "Even newspaper reports present contradictory information."
+northamerica:895:# and wrote "Even newspaper reports present contradictory information."
+
+To learn a little more about this line and to once again confirm that the above found commit is the oldest instance of the line, I ran:
+
+git log --all -p --reverse --source -S “Even newspaper reports present contradictory information.”
+
+The --all searches through all the files in the repository, -p gives us the diff for the entire commit with that line, --reverse displays the commits in reverse order so we can ensure that we are seeing the first instance, and --source prints out the reference name.
+
+Here is the output. I've only shown the relevant portions since it was a very long commit.
+
+
++# From Paul Eggert (1995-12-19):
++# Indiana generally observes either EST all year, or CST/CDT,
++# but areas near Cincinnati and Louisville use those cities' timekeeping
++# and in 1969 and 1970 the whole state observed daylight time;
++# and there are other exceptions as noted below.
++# Shanks partitions Indiana into 345 regions, each with its own time history,
++# and writes ``Even newspaper reports present contradictory information.''
++# Fortunately, most of the complexity occurred before our cutoff date of 1970.
+
+This indicates that the line was perhaps a quote in a comment by Paul Eggert which someone named Arthur David Olson included in his commit on December 21, 1995.
+
+Upon further investigation I also noticed that this line was tampered with on in Jan 2006, April 2006, 2007, and Sept 2013. Although the line itself doesn't seem to have changed so I believe the text surrounding it was edited which indicated a change in the line.
+
+
+> Final Answer:
+It was contributor named Arthur David Olson who introduced this sentence on Thursday, December 21, 1995.
+-------------------------------------------------------------------------------------------------------
+

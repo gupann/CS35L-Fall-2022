@@ -1,0 +1,13 @@
+diff --git a/zic.c b/zic.c
+index d8bdbb96..548c1c5f 100644
+--- a/zic.c
++++ b/zic.c
+@@ -2216,7 +2216,7 @@ convert64(uint_fast64_t val, char *buf)
+ }
+ 
+ static void
+-puttzcode(const int_fast32_t val, FILE *const fp)
++puttzcode(zic_t val, FILE *fp)
+ {
+ 	char	buf[4];
+ 

@@ -1,0 +1,19 @@
+#!/usr/local/cs/bin/python3
+
+#input will be git log --pretty=fuller tag1..tag2
+
+import sys
+from collections import Counter
+
+timezones = [tstring.rstrip()[-5:] for tstring in sys.stdin if "CommitDate: " in tstring]   
+#takes input line, checks if has CommitDate, puts last 5 characters in timezones
+timeCount = dict(Counter(timezones))
+#maps the timezone to the number of occurences
+
+# print(timeCount)
+
+ffi = lambda s: int(s)  #function to take timezone string from dictionary and make int
+sKeys = sorted(timeCount.keys(), key=ffi)   # sorted keys by timezone value, increasing order
+# print(list(sKeys))
+for e in sKeys:
+    print(str(e) + " " + str(timeCount[e])) # prints answer in required from

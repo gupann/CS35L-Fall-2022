@@ -1,0 +1,97 @@
+Anmol Gupta (005723941)
+---------------------------------------------------------------------------------------------------------
+
+Exercise 2.1
+--------------
+
+1. To warm up, compute (2607 − 1) × (2607 − 1) (i.e., 2**(607 - 1) * (2**607 - 1)) in the *scratch* buffer, by using the expt and other functions. This is the 14th perfect number, discovered in 1952.
+
+> To compute (2607 − 1) × (2607 − 1), I did:
+
+(* (expt 2 (- 607 1)) (- (expt 2 607) 1))
+14105378370671206906320795808606318988148674351471566783883867599995486774265238011410419332903769025156195056870982932716408772436637008711673126815931365248745\
+06524398058772962072974467232951666582288469268077866528701889208678794514783645693139220603706950647360735723786951764730552668262532848863837150729743244638353\
+00053138429460296575143368065570759537328128
+
+2. Use Emacs to determine how many bits it would take to represent this number in base-2 notation (not counting any sign bit), by writing a Lisp expression that yields the number of bits as an integer.
+
+> Lisp expression that yields the number of bits as an integer for the given number in base-2 notation is: 
+
+(+ (logb (* (expt 2 (- 607 1)) (- (expt 2 607) 1))) 1)
+1213
+
+3. Type M-: and use it to compute (2607 − 1) × (2607 − 1).
+
+>Evaluating  M-: (* (expt 2 (- 607 1)) (- (expt 2 607) 1)) gives us:
+
+141053783706712069063207958086063189881486743514715667838838675999954867742652380114104193329037690251561950568709829327164087724366370087116731268159313652487450652439805877296207297446723295166658228846926\
+807786652870188920867879451478364569313922060370695064736073572378695176473055266826253284886383715072974324463835300053138429460296575143368065570759537328128 (#o17777777777777777777777777777777777777777777\
+777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777000000000000000000000000000000000000000000000000\
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, #x1ffffffffffffffffffffffffffffffffffffffffffffffff\
+fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\
+000000000000000000000000000000000000000000000000)
+
+4. Type C-h k C-h k and describe what happens and why. (This should relate to the C-h b output mentioned previously.)
+
+> Running C-h k C-h k we are able to get a description of what C-h k does.
+C-h K key displays the section of the Emacs manual that describes the command corresponding to key.
+It basically runs the command describe-key (found in global-map), which is an interactive byte-compiled Lisp function. When we run C-h k for the command C-h k itself, the description of C-h k pops up in the help window.
+
+5. Type C-h k M-SPC and describe what happens and why. (This should also relate.)
+
+> Running C-h k M-SPC we are able to get a description of what M-SPC does. 
+M-SPC deletes all spaces and tabs around the point where our cursor is, leaving one space (or N spaces if specified). If N is negative, it deletes newlines as well, leaving -N spaces.
+It runs the command just-one-space (found in global-map), which is
+an interactive byte-compiled Lisp function. When we run C-h k for the command M-SPC, the description of M-SPC pops up in the help window.
+
+
+6. What's the general way to do M-SPC (what’s that general function)
+
+> The more general function is: cycle-spacing
+The first call in a sequence acts like ‘just-one-space’.
+It deletes all spaces and tabs around point, leaving one space
+(or N spaces). The second call in a sequence deletes all spaces. The third call in a sequence restores the original whitespace (and point).
+
+---------------------------------------------------------------------------------------------------------
+
+Homework
+---------
+
+1. What happens when this script is invoked on an empty file like /dev/null, and why?
+
+> When the script is invoked on an empty file, we receive the following error:
+
+[anmol@lnxsrv15 ~/cs35L/ass2]$ python2 randline.py /dev/null
+Traceback (most recent call last):
+  File "randline.py", line 70, in <module>
+    main()
+  File "randline.py", line 64, in main
+    sys.stdout.write(generator.chooseline())
+  File "randline.py", line 34, in chooseline
+    return random.choice(self.lines)
+  File "/usr/lib64/python2.7/random.py", line 277, in choice
+    return seq[int(self.random() * len(seq))]  # raises IndexError if seq is empty
+IndexError: list index out of range
+
+We get this error because we require a non-empty file as an input to run the function.
+
+2. What happens when this script is invoked with Python 3 rather than Python 2, and why?
+
+> When the script is invoked on an empty file using python 3, we receive the following error:
+
+[anmol@lnxsrv15 ~/cs35L/ass2]$ python3 randline.py /dev/null 
+  File "/w/home.11/be/ugrad/anmol/cs35L/ass2/randline.py", line 65
+    except IOError as (errno, strerror):
+                      ^
+SyntaxError: invalid syntax
+
+We get this error because our code uses syntax that is specific to Python 2, hence the Python 3 compiler is unable to recognize it.
+
+3. What happens when your shuf.py script is invoked with Python 2 rather than Python 3, and why?
+
+> When we invoke the shuf.py script using Python 2, we get the following error:
+SyntaxError: invalid syntax
+
+We get this error because our code uses syntax that is specific to Python 3 such as ArgParse , hence the Python 2 compiler is unable to recognize it.
+
+

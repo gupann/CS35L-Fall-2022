@@ -1,0 +1,97 @@
+Anmol Gupta | 005723941 | git-detective.txt
+-------------------------------------------
+
+In order to begin my search of the original changes that fixed the problem of
+"git diff --relative" giving segfault and producing incorrect result when there
+are unmerged paths, I did the following steps.
+
+1. First, I decided to just view a log of commits containing a part of the given
+string. I just did a basic search through all the files using:
+
+ git log --all --source -S '"git diff --relative" segfaulted and/or produced'
+
+This gave me a log of 4 commits which I then decided to explore further. 
+ > commit af6d1d6, commit 93185c, commit 8463be, commit 055f74
+
+
+Using git show <commitID>, I viewed each commit and searched for the given line
+("git diff --relative" segfaulted and/or produced incorrect result when there
+are unmerged paths.)  
+
+While the other 2 commits do not indicate much, 
+
+commit 8463be mentions this:
+
+"git diff --relative" segfaulted and/or produced incorrect result
++   when there are unmerged paths.
++   (merge 8174627b3d dd/diff-files-unmerged-fix later to maint).
+
+and commit 055f7 mentions this:
+
+* dd/diff-files-unmerged-fix (2021-08-25) 1 commit
++ - diff-lib: ignore paths that are outside $cwd if --relative asked
++
++ "git diff --relative" segfaulted and/or produced incorrect result
++ when there are unmerged paths.
++
++ Will merge to 'next'. 
+
+> Looking closer at what is mentioned in commit 8463be, I decide to check out merge 8174627b3d.
+ 
+This commit seems promising since :
+- it mentions the diff-lib --> this is probably where the diff source code is written.
+- "In diff_unmerge(), NULL will be returned if the requested path is
+    outside of the interesting directories, thus we'll run into NULL
+    pointer dereference in run_diff_files when trying to dereference
+    its return value."
+	--> this correlates to segmentation faults that are often caused due to memory
+	 issues such as those involved in dereferencing pointers.
+- there are multiple tests to test the functionality of --relative as well as test_done.
+
+This leads me to believe that commit 8174627b3d has the required changes that fixed the initial problem. 
+
+** To confirm, I decided to try a different approach as well**
+1. I did git log | grep -E "diff.*relative" -B 8 -A 3 to display all the commits with similar syntax.
+A lot of commits were shown, but after looking through them briefly, these 2 seemed relevant:
+
+commit 872c9e67ecf9ecb525e320e46171027c7742e76a
+Merge: ae9e6ef35e 8174627b3d
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Tue Oct 12 13:51:40 2021 -0700
+
+    Merge branch 'dd/diff-files-unmerged-fix' into maint
+    
+    "git diff --relative" segfaulted and/or produced incorrect result
+    when there are unmerged paths.
+    
+    * dd/diff-files-unmerged-fix:
+      diff-lib: ignore paths that are outside $cwd if --relative asked
+--
+
+commit c8f491668e46d66290aec97caaf94fe2c1ecccbd
+Merge: 85246a7054 8174627b3d
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Sep 8 13:30:31 2021 -0700
+
+    Merge branch 'dd/diff-files-unmerged-fix'
+    
+    "git diff --relative" segfaulted and/or produced incorrect result
+    when there are unmerged paths.
+    
+    * dd/diff-files-unmerged-fix:
+      diff-lib: ignore paths that are outside $cwd if --relative asked
+--
+
+Both these commits seem to be merge commits having a common parent commit 8174627b3d which is what I had 
+suspected before. Looking deeper into both, I noticed that the other commits mentioned above do not have 
+relevant information about fixes, but commit 8174627b3d does as it has changes to the code and tests it. 
+
+Hence, I believe that the commit responsible for introducing fixes is:
+
+commit 8174627b3d32dc80cb477b3fa46971955f26c6b2
+Author: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Date:   Sun Aug 22 15:49:08 2021 +0700
+
+--------------------------------------------------------------------------------------------------
+
+

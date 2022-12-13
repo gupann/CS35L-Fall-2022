@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+cat sorted.words | tr '[:upper:]' '[:lower:]' | tr -cs 'A-Za-z' '[\n*]' | sort -u > lowercase.words
+#first we make all the words from the sorted.words in lowercase to prevent words with capital letters from being outputted as an error, then put in a file
+
+tr '[:upper:]' '[:lower:]' | tr -cs 'A-Za-z' '[\n*]' | sort -u | comm -23 - lowercase.words
+#making input lowercase, cleaning and sorting it. comparing the output to lowercase.words and displaying output of differences
+
+rm lowercase.words
+#deleting temp file 
