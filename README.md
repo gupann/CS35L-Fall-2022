@@ -25,21 +25,9 @@ For syllabus and assignments, see the [course website](https://web.cs.ucla.edu/c
 
 Check out the repo for our final group project - **What the Truck** - [here](https://github.com/shlokj/what-the-truck).
 
-<hr>
-
-# Assignment Scores
-
-|                       |            |                               
-| --------------------- | ---------- | 
-| Assignment 1          | 97/100     |
-| Assignment 2          | 100/100    | 
-| Assignment 3          | 100/100    | 
-| Assignment 4          | 100/100    |
-| Assignment 5          | 97/100     | 
-|                       |            |    
+<hr> 
 
 These are my personal solutions and should only be used as a reference for future assignments. Directly copying the source code is at your own risk.
-<hr>
 
 Good luck!
 
