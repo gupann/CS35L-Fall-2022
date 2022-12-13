@@ -1,5 +1,5 @@
 # CS35L Fall 2022
-Course Name: Com Sci 35L - Software Construction
+**Course Name:** Com Sci 35L - Software Construction
 
 **Professor:** Paul R. Eggert <br>
 **Section:** 1A (TA: Yuxing Qiu, LA: Ning Wang)
