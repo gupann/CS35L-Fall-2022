@@ -1,5 +1,5 @@
 # CS35L Fall 2022
-**Course Name:** Com Sci 35L - Software Construction
+**Course Name:** COM SCI 35L - Software Construction
 
 **Professor:** Paul R. Eggert <br>
 **Section:** 1A (TA: Yuxing Qiu, LA: Ning Wang)
@@ -27,7 +27,4 @@ Check out the repo for our final group project - **What the Truck** - [here](htt
 
 <hr> 
 
-These are my personal solutions and should only be used as a reference for future assignments. Directly copying the source code is at your own risk.
-
 Good luck!
-
